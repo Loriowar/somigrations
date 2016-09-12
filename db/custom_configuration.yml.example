@@ -1,0 +1,10 @@
+v1:
+  schema:
+    main: 'public'
+  db:
+    name:
+      default: 'postgres'
+      production: 'production_db'
+    role:
+      superuser: 'postgres'
+      other: 'db_user'

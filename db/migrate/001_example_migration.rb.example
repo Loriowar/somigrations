@@ -1,0 +1,17 @@
+class AddExtensionTdsFdw < PgMigration::V1::Base
+  def up
+    within_up(db_alias: :production, role_alias: :superuser, single_transaction: true) do
+      execute <<-PLSQL
+        CREATE EXTENSION tds_fdw;
+      PLSQL
+    end
+  end
+
+  def down
+    within_down(db_alias: :production, role_alias: :superuser, single_transaction: true) do
+      execute <<-PLSQL
+        DROP EXTENSION tds_fdw;
+      PLSQL
+    end
+  end
+end

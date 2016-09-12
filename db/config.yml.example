@@ -1,0 +1,17 @@
+base: &base
+  adapter: postgresql
+  host: localhost
+  encoding: utf8
+  reconnect: true
+  timeout: 5000
+  pool: 5
+
+development:
+  username: any_superuser
+  password: 'su_password'
+  database: my_db_development
+  <<: *base
+
+production:
+  database: my_db_production
+  <<: *base
