@@ -1,19 +1,4 @@
-# require 'rubygems'
-# require 'bundler/setup'
-# require 'active_record'
-# require 'yaml'
-# require 'logger'
-# require 'fileutils'
-
-# руководство rake рекомендует хранить раздельные файлы rake в каталоге rakelib
-# в этом случае нет возможности вызвать из текущего файла задачу из другого
-# поэтому просто подгружаем другие rake-файлы
-# Dir.glob('rake/*.rake').each {|r| load r}
-
-# desc "Псевдоним для build:build"
-# task :build => ['build:build']
-
-# require 'pry'
+require 'pry'
 
 require 'standalone_migrations'
 StandaloneMigrations::Tasks.load_tasks

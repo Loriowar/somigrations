@@ -2,6 +2,8 @@ module PgMigration
   module V1
     class Base < ActiveRecord::Migration[5.0]
 
+      # @description: all magic with blocks needed for eval raw-sql within different DBs
+
       # @todo: Need processing of errors and exceptions everywhere
 
       # @note: instance_eval &bloc instead of block.call is very important
@@ -15,7 +17,8 @@ module PgMigration
 
         StrangeModel.establish_connection(new_db_config)
         @strange_delegator = StrangeDelegator.new(StrangeModel.connection, self)
-        @strange_delegator.instance_eval(&block)
+
+        within_delegator &block
       end
 
       def within_role(role_alias = :superuser, &block)
@@ -99,8 +102,14 @@ module PgMigration
 
       # helper methods
 
+      # @todo: need to extract version from full class name instead of hardcode
       def migration_config
-        @migration_config ||= marshal_dup(::CUSTOM_CONFIGURATION[:v1])
+        @migration_config ||= ::CUSTOM_CONFIGURATION[:v1]
+      end
+
+      # dot-separated string like 'schema.main' without version specifying
+      def value_for(scope)
+        migration_config.dig(*scope.split('.'))
       end
 
       def marshal_dup(obj)

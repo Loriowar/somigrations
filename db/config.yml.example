@@ -7,11 +7,11 @@ base: &base
   pool: 5
 
 development:
+  <<: *base
   username: any_superuser
   password: 'su_password'
   database: my_db_development
-  <<: *base
 
 production:
-  database: my_db_production
   <<: *base
+  database: my_db_production
