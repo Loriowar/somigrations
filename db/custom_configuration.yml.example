@@ -1,10 +1,32 @@
 v1:
-  schema:
-    main: 'public'
   db:
     name:
-      default: 'postgres'
-      production: 'production_db'
+      # default DB for storing information about migrations and configs from config.yml, which was used during each migration
+      default: 'vhod_testy'
+      # target DB for apply migrations
+      production: 'one_of_production'
+    schema:
+      main: 's_general'
+      external: 's_external'
+      cache: 's_cache'
     role:
-      superuser: 'postgres'
-      other: 'db_user'
+      # role with superuser rights for execute migrations on cluster level; preferable, this role must be same as role(user) from config.yml
+      superuser: 'db_superuser'
+      # тот самый мигратор, владеющей пробакшн БД
+      # owner of particular DB
+      migrator: 'owner_of_one_of_production_db'
+    group:
+      reader: 'g_readers'
+      writer: 'g_writers'
+    # you can specify any nested options for you own purpose; this options will be available in migrations and stored in a db for the aim of rollback
+    external_object:
+      tds_fdw:
+        server_name: 'mssql_srv'
+        server_option:
+          servername: 'url_to_mssql_db'
+          port: '1433'
+          database: 'MSSQLDBName'
+          tds_version: '7.1'
+        user_mapping_option:
+          username: 'login'
+          password: 'qwerty'
