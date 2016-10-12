@@ -1,0 +1,41 @@
+development:
+  active_record_object:
+    table:
+      # параметры, отвечающие за имена AR-таблиц не записываются в БД и поэтому содержимое конфига влияет на down-миграции
+      # то есть конфиг можно безболезненно править только после отката всех миграций, использующих эти значения
+      schema_migrations: 'somigration_development_schema_migrations'
+      schema_migration_extensions: 'somigration_development_schema_migration_extensions'
+      internal_metadata_table_name: 'somigration_development_ar_internal_metadata'
+  v1:
+    db:
+      name:
+        # БД для разработки, на которую нужно накатывать основные миграции
+        target: 'redmine_db_development'
+
+production:
+  active_record_object:
+    table:
+      # параметры, отвечающие за имена AR-таблиц не записываются в БД и поэтому содержимое конфига влияет на down-миграции
+      # то есть конфиг можно безболезненно править только после отката всех миграций, использующих эти значения
+      schema_migrations: 'somigration_production_schema_migrations'
+      schema_migration_extensions: 'somigration_production_schema_migration_extensions'
+      internal_metadata_table_name: 'somigration_production_ar_internal_metadata'
+  v1:
+    db:
+      name:
+        # боевая БД, на которую нужно накатывать основные миграции
+        target: 'redmine_db'
+
+test:
+  active_record_object:
+    table:
+      # параметры, отвечающие за имена AR-таблиц не записываются в БД и поэтому содержимое конфига влияет на down-миграции
+      # то есть конфиг можно безболезненно править только после отката всех миграций, использующих эти значения
+      schema_migrations: 'somigration_test_schema_migrations'
+      schema_migration_extensions: 'somigration_test_schema_migration_extensions'
+      internal_metadata_table_name: 'somigration_test_ar_internal_metadata'
+  v1:
+    db:
+      name:
+        # БД для автоматизированных тестов, на которую нужно накатывать основные миграции
+        target: 'redmine_db_test'

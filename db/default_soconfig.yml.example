@@ -1,10 +1,21 @@
+active_record_object:
+  table:
+    # parameters of AR tables doesn't store in DB as all other config,  therefore values from config affect on down-migrations
+    # i.e. safe changing of this values may be done only after rollback of all migrations
+    # @note: this options require a definition for each environment if you have a single DB for all configs (i.e. for more then one env)
+    schema_migrations: 'somigration_schema_migrations'
+    schema_migration_extensions: 'somigration_schema_migration_extensions'
+    internal_metadata_table_name: 'somigration_ar_internal_metadata'
+  option:
+    protected_environments: []
+
 v1:
   db:
     name:
       # default DB for storing information about migrations and configs from config.yml, which was used during each migration
       default: 'vhod_testy'
       # target DB for apply migrations
-      production: 'one_of_production'
+      target: 'one_of_production'
     schema:
       main: 's_general'
       external: 's_external'

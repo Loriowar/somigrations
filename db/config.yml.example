@@ -1,3 +1,5 @@
+# @note: here described default connection for store information about migrations,
+#        target db for migrations described in default_soconfig and custom_soconfig
 base: &base
   adapter: postgresql
   host: localhost
@@ -10,8 +12,16 @@ development:
   <<: *base
   username: any_superuser
   password: 'su_password'
-  database: my_db_development
+  database: separate_db_for_development_somigration_config
 
 production:
   <<: *base
-  database: my_db_production
+  username: any_superuser
+  password: 'su_password'
+  database: separate_db_for_production_somigration_config
+
+test:
+  <<: *base
+  username: any_superuser
+  password: 'su_password'
+  database: separate_db_for_test_somigration_config
