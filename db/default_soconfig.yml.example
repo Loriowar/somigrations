@@ -23,9 +23,10 @@ v1:
     role:
       # role with superuser rights for execute migrations on cluster level; preferable, this role must be same as role(user) from config.yml
       superuser: 'db_superuser'
-      # тот самый мигратор, владеющей пробакшн БД
       # owner of particular DB
       migrator: 'owner_of_one_of_production_db'
+      # role with readonly permissions for backup DB
+      backuper: 'vhod_backuper'
     group:
       reader: 'g_readers'
       writer: 'g_writers'

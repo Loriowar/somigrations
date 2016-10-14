@@ -5,6 +5,7 @@ StandaloneMigrations::Tasks.load_tasks
 
 # @hack: sort require for load 'base' firstly
 # Dir.glob('lib/pg_migration/v1/**/*.rb').sort.each {|r| require File.expand_path(r, File.dirname(__FILE__))}
+require 'pg_migration/v1/base_module'
 require 'pg_migration/v1/base'
 
 # @note: config must be loaded before setup of AR parameters and before require modules
@@ -21,6 +22,8 @@ CUSTOM_CONFIGURATION =
 # @note: in model used values from config
 # Dir.glob('model/**/*.rb').each {|r| require r}
 require 'model/schema_migration_extension'
+
+Dir.glob('lib/independent_scenario/**/*.rb').each {|r| require File.expand_path(r, File.dirname(__FILE__))}
 
 ActiveRecord::Base.schema_format = :sql
 # @note: alternative table name for AR table with information about migration; aim: prevent intersection with default one
