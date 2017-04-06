@@ -1,0 +1,25 @@
+class AddServerBasedOnTdsFdw < PgMigration::V1::Base
+  def up
+    within_up(db_alias: :target, role_alias: :superuser, single_transaction: true) do
+      execute <<-SQL
+        CREATE SERVER #{value_for('db.external_object.tds_fdw.server_name')}
+        FOREIGN DATA WRAPPER tds_fdw
+        OPTIONS (servername '#{value_for('db.external_object.tds_fdw.server_option.servername')}',
+                 port '#{value_for('db.external_object.tds_fdw.server_option.port')}',
+                 database '#{value_for('db.external_object.tds_fdw.server_option.database')}',
+                 tds_version '#{value_for('db.external_object.tds_fdw.server_option.tds_version')}');
+
+        GRANT USAGE ON FOREIGN SERVER #{value_for('db.external_object.tds_fdw.server_name')} TO GROUP #{value_for('db.role.migrator')};
+      SQL
+    end
+  end
+
+  def down
+    within_down(db_alias: :target, role_alias: :superuser, single_transaction: true) do
+      execute <<-SQL
+        REVOKE USAGE ON FOREIGN SERVER #{value_for('db.external_object.tds_fdw.server_name')} FROM GROUP #{value_for('db.role.migrator')};
+        DROP SERVER #{value_for('db.external_object.tds_fdw.server_name')};
+      SQL
+    end
+  end
+end

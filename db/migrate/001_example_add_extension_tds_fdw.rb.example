@@ -1,4 +1,4 @@
-class AddExtensionTdsFdw < PgMigration::V1::Base
+class ExampleAddExtensionTdsFdw < PgMigration::V1::Base
   def up
     within_up(db_alias: :target, role_alias: :superuser, single_transaction: true) do
       execute <<-PLSQL
