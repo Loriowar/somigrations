@@ -8,10 +8,8 @@ StandaloneMigrations::Tasks.load_tasks
 require 'pg_migration/v1/base_module'
 require 'pg_migration/v1/base'
 
-# @note: config must be loaded before setup of AR parameters and before require modules
-# @note: for separate default values (which contain most part of parameters) from custom part (with less part of parameters)
-#        we use two config files and merge them, otherwise we can't make a deep merge or redefine certain keys inside an array
-#        within a single yml file
+Dir.glob('lib/patch/**/*.rb').each {|r| require File.expand_path(r, File.dirname(__FILE__))}
+
 CUSTOM_CONFIGURATION =
     YAML.load_file(File.dirname(__FILE__) + '/db/default_soconfig.yml').
         with_indifferent_access.
@@ -22,6 +20,7 @@ CUSTOM_CONFIGURATION =
 # @note: in model used values from config
 # Dir.glob('model/**/*.rb').each {|r| require r}
 require 'model/schema_migration_extension'
+require 'model/testy'
 
 Dir.glob('lib/independent_scenario/**/*.rb').each {|r| require File.expand_path(r, File.dirname(__FILE__))}
 
